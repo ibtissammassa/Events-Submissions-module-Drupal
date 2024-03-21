@@ -1,0 +1,82 @@
+<?php 
+
+/**
+ * @file
+ * Events_submissions module hooks
+ */
+
+ use Drupal\Core\Form\FormStateInterface;
+
+//  /**
+//   * Implements hook_install()
+//  */
+
+//  function submissions_install() {
+//     $types = node_type_get_names();
+//     if (!in_array('event', $types)) {
+//         $type = \Drupal\node\Entity\NodeType::create([
+//             'type' => 'event',
+//             'name' => 'Event',
+//             'description' => 'This is a custom content type created by Events submissions module',
+//             'fields' => [
+//                 'field_example_text' => [
+//                   'field_name' => 'field_example_text',
+//                   'label' => 'Event date',
+//                   'type' => 'text', 
+//                 ],]
+//         ]);
+//         $type->save();
+//       }
+//   }
+
+ /**
+  * Implements hook_form_BASE_FORM_ID_alter().
+  */
+  function submissions_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    $node = $form_state->getFormObject()->getEntity();
+
+    if($node->getType()=='event') {
+        $form['events_submissions_list'] = [
+            '#type'=> 'details',
+            '#title'=>t('Event submissions Collection'),
+            '#access'=>\Drupal::currentUser()->hasPermission('administor eventSubmissionsList'),
+            '#weight'=>50,
+        ];
+
+        $enabler = \Drupal::service('submissions.enabler');
+        $form['events_submissions_list']['event_submissions_enabled'] = [
+            '#type'=> 'checkbox',
+            '#title'=> t('Collect Event submissions details for this event.'),
+            '#required' => TRUE,
+            '#default_value'=> TRUE,
+        ];
+
+        foreach(array_keys($form['actions']) as $action) {
+            if($action != 'preview' && isset($form['actions'][$action]['#type']) &&
+            $form['actions'][$action]['#type']=='submit'){
+                $form['actions'][$action]['#submit'][] = 'submissions_form_node_form_submit';
+            }
+        }
+    }
+  }   
+
+  /**
+   * Form submission handler for event submissions item field on the node form
+   * @see submissions_form_node_form_alter()
+   * 
+   * @param array $form
+   * @param Drupal\Core\Form\FormStateInterface $form_state
+   */
+  function submissions_form_node_form_submit($form, FormStateInterface $form_state){
+    $enabler = \Drupal::service('submissions.enabler');
+
+    $node = $form_state->getFormObject()->getEntity();
+
+    if($form_state->getValue('event_submissions_enabled')){
+        $enabler->setEnabled($node);
+    }
+    else{
+        $enabler->delEnabled($node);
+    }
+
+  }

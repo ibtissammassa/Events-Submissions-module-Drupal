@@ -1,0 +1,6 @@
+submissions.report_link:
+  title: List of Events submissions
+  description: View listing of Events submissions
+  route_name: submissions.report
+  parent: system.admin_reports #/admin/reports
+  weight: -5

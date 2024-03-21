@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the event submissions module.
+ */
+
+function submissions_schema(){
+    $schema['events_submissions_list'] = [
+        'description'=> 'Stores infos for event submission',
+        'fields' => [
+            'id' => [
+                'description' => 'the primary identifier for the record',
+                'type'=> 'serial',
+                'size'=> 'small',
+                'unsigned'=> TRUE,
+                'not null'=> TRUE,
+            ],
+            'uid' => [
+                'description'=> 'The {users}.uid that wants to attend the event',
+                'type'=> 'int',
+                'not null' => TRUE,
+                'default' => 0,
+            ],
+            'nid' => [
+                'description'=> 'The {node}.nid for this event submission',
+                'type'=> 'int',
+                'unsigned'=> TRUE,
+                'not null'=> TRUE,
+                'default' => 0,
+            ],
+            'name' => [
+                'description'=> 'User\'s name',
+                'type'=> 'varchar',
+                'length'=>64,
+                'not null'=>FALSE,
+                'default'=> 0,
+            ],
+            'mail' => [
+                'description'=> 'User\'s email address',
+                'type'=> 'varchar',
+                'length'=>64,
+                'not null'=>FALSE,
+                'default'=> '',
+            ],
+            'created'=>[
+                'description'=> 'Timedstamp for when this event submission was created',
+                'type'=> 'int',
+                'not null'=> TRUE,
+                'default' =>0,
+            ],
+        ],
+        'primary key'=>['id'],
+        'indexes'=>[
+            'node'=>['nid'],
+            'node_user'=>['nid','uid'],
+        ]
+    ];
+
+    $schema['event_submissions_enabled']=[
+        'description'=> 'Tracks whether submissions is enabled or not for a node',
+        'fields' =>[
+            'nid' => [
+                'description'=> 'The {node}.nid that has submissions enabled.',
+                'type'=> 'int',
+                'unsigned'=> TRUE,
+                'not null'=> TRUE,
+                'default' => 0,
+            ],
+        ],
+        'primary key'=>['nid'],
+    ];
+
+    return $schema;
+}

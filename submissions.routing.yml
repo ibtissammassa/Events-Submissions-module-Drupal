@@ -1,0 +1,7 @@
+submissions.report:
+  path: '/admin/reports/eventsSubmissions'
+  defaults:
+    _controller: '\Drupal\submissions\Controller\ReportController::report'
+    _title: 'List of events submissions'
+  requirements:
+    _permission: 'access submissions report'

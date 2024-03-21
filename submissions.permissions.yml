@@ -1,0 +1,10 @@
+view event submit:
+  title: 'View Event submission Form'
+  description: 'View and submit to attend to the event'
+administor eventSubmissionsList:
+  title: 'Administor Event submissions settings'
+  description: 'Access the Event submissions settings page'
+  restrict access: true
+access submissions report:
+  title: 'Access List of submissions'
+  description: 'View the report listing of all events submitted'

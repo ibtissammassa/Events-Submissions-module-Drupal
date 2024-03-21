@@ -1,0 +1,5 @@
+services:
+  submissions.enabler:
+    class: Drupal\submissions\EnablerService
+    arguments: ['@database']
+  

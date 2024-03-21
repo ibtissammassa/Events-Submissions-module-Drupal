@@ -1,0 +1,10 @@
+name: 'Submissions list (for events)'
+type: module
+core_version_requirement: ^10
+description: 'Allows users to Submit for events'
+package: 'Event Submissions list'
+
+dependencies:
+  - drupal:block
+
+# configure: Events_submissions.admin_settings
