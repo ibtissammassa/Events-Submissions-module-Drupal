@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: event_full_content_logo
+label: 'Event full content logo'
+effects:
+  c71cf1b4-5b5c-417a-b284-8d1490e5cad4:
+    uuid: c71cf1b4-5b5c-417a-b284-8d1490e5cad4
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1090
+      height: 300
+      anchor: center-center

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seats_left
+    - node.type.event
+id: node.event.field_seats_left
+field_name: field_seats_left
+entity_type: node
+bundle: event
+label: 'seats left'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,21 @@
+name: 'Events Submissions list (all event related)'
+type: module
+core_version_requirement: '^9.4 || ^10'
+description: 'Allows users to manage and Submit for events'
+package: 'Events'
+dependencies:
+  - 'drupal:block'
+  - 'drupal:datetime'
+  - 'drupal:field'
+  - 'drupal:image'
+  - 'drupal:menu_ui'
+  - 'drupal:node'
+  - 'drupal:path'
+  - 'drupal:taxonomy'
+  - 'drupal:text'
+  - 'drupal:user'
+  - 'drupal:views'
+  - 'events_submissions:events_submissions'
+  - 'pathauto:pathauto'
+module:
+  version: '1.0'

@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Event topics'
+vid: event_topics
+description: 'this is where we track the topics for drupal events'
+weight: 0

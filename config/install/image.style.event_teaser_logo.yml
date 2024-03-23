@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: event_teaser_logo
+label: 'Event teaser logo'
+effects:
+  6fece5e8-31b8-47a8-973c-f58630996743:
+    uuid: 6fece5e8-31b8-47a8-973c-f58630996743
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 260
+      height: 260
+      anchor: center-center

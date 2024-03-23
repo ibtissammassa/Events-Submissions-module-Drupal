@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - events_submissions
+  theme:
+    - events_theme
+id: events_theme_theeventsubmissionsblock
+theme: events_theme
+region: sidebar_second
+weight: -5
+provider: null
+plugin: EventSubmission_block
+settings:
+  id: EventSubmission_block
+  label: 'Event submissions'
+  label_display: visible
+  provider: events_submissions
+visibility: {  }
