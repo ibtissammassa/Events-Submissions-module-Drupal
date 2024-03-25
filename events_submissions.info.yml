@@ -5,6 +5,7 @@ description: 'Allows users to manage and Submit for events'
 package: Events
 dependencies:
   - 'drupal:block'
+  - 'drupal:comment'
   - 'drupal:datetime'
   - 'drupal:field'
   - 'drupal:file'
@@ -18,5 +19,6 @@ dependencies:
   - 'drupal:views'
   - 'events_submissions:events_submissions'
   - 'pathauto:pathauto'
+  - 'twig_tweak:twig_tweak'
 module:
   version: '1.0'
