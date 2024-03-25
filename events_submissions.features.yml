@@ -1,23 +1,5 @@
-required:
-  - block.block.events_theme_theeventsubmissionsblock
-  - block.block.events_theme_views_block__last_events_block_1
-  - node.type.event
-  - core.entity_form_display.node.event.default
-  - core.entity_form_display.node.speakers.default
-  - core.entity_view_display.node.event.default
-  - core.entity_view_display.node.event.full
-  - core.entity_view_display.node.event.teaser
+excluded:
+  - field.storage.node.field_speaker_topics
   - core.entity_view_display.node.speakers.default
   - core.entity_view_display.node.speakers.teaser
-  - field.field.node.event.body
-  - field.field.node.event.field_event_category
-  - field.field.node.event.field_event_date
-  - field.field.node.event.field_event_logo
-  - field.field.node.event.field_seats_left
-  - field.field.node.speakers.field_speaker_topics
-  - image.style.event_full_content_logo
-  - image.style.event_teaser_logo
-  - pathauto.pattern.events
-  - taxonomy.vocabulary.event_topics
-  - views.view.events
-  - views.view.last_events
+required: true

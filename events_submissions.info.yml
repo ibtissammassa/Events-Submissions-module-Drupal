@@ -1,12 +1,13 @@
-name: 'Events Submissions list (all event related)'
+name: 'Events module'
 type: module
 core_version_requirement: '^9.4 || ^10'
 description: 'Allows users to manage and Submit for events'
-package: 'Events'
+package: Events
 dependencies:
   - 'drupal:block'
   - 'drupal:datetime'
   - 'drupal:field'
+  - 'drupal:file'
   - 'drupal:image'
   - 'drupal:menu_ui'
   - 'drupal:node'

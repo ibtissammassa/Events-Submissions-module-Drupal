@@ -5,10 +5,10 @@ dependencies:
     - views.view.last_events
   module:
     - views
-  theme:
-    - events_theme
+  # theme:
+  #   - events_theme
 id: events_theme_views_block__last_events_block_1
-theme: events_theme
+# theme: events_theme
 region: sidebar_second
 weight: -4
 provider: null
