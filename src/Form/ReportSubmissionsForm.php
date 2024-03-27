@@ -1,0 +1,132 @@
+<?php
+
+/**
+ * @file
+ * A form to display details for Event submission and downloadSubmissions them as csv
+ */
+
+namespace Drupal\events_submissions\Form;
+
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\Response;
+
+class ReportSubmissionsForm extends FormBase {
+    /**
+     * {@inheritDoc}
+     */
+    function getFormId(){
+        return 'report_event_submission_form';
+    }
+    /**
+     * {@inheritDoc}
+     */
+    function buildForm(array $form, FormStateInterface $form_state){
+        $form = [];
+
+        $form['message'] = [
+            '#markup'=> t('Bellow is a list of all Events submissions inclusing username, full name, email address and the name of the event they will be attending.'),
+        ];
+
+        $headers = [
+            $this->t('Username'),
+            $this->t('Event ID'),
+            $this->t('Event'),
+            $this->t('full name'),
+            $this->t('Email'),
+        ];
+
+        $table_rows = $this->loadSubmissions();
+
+        //Create the render array for rendering an html table.
+        $form['table'] = [
+            '#type'=> 'table',
+            '#header'=> $headers,
+            '#rows'=> $table_rows,
+            '#empty'=>$this->t('No entries available.')
+        ];
+
+        $form['submit'] = [
+            '#type' => 'submit',
+            '#value' => $this->t('Export CSV'),
+            '#submit' => ['::exportCsv'], //custom submit handler
+        ];
+
+        // Do not cache this page (always refresh this render array when it is time to display it)
+        $form['#cache']['max-age'] = 0;
+
+        return $form;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    function submitForm(array &$form, FormStateInterface $form_state){  
+    }
+
+    /**
+     * Custom submit handler for exporting CSV.
+     */
+    public function exportCsv(array &$form, FormStateInterface $form_state) {
+        $table_rows = $this->loadSubmissions();
+        $csv_content = '';
+    
+        $headers = [
+            'Username',
+            'Event ID',
+            'Event',
+            'Full name',
+            'Email',
+        ];
+    
+        $csv_content .= '"' . implode('","', $headers) . '"' . PHP_EOL;
+        // Add data rows to CSV
+        foreach ($table_rows as $row) {
+            $csv_content .= '"' . implode('","', $row) . '"' . PHP_EOL;
+        }
+    
+        //Send CSV file as response
+        $response = new Response($csv_content);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="events_submissions_report.csv"');
+        $response->send();    
+        \Drupal::messenger()->addMessage(
+            t('CSV exported successfully')
+        );
+        return;
+    }
+
+    /**
+     * Gets and returns all submissions for all events
+     * These are returned as an associative array, with 
+     * 
+     * @return array|null
+     */
+    protected function loadSubmissions() {
+        try{
+            $database = \Drupal::database();
+            $select_query = $database->select('events_submissions_list','es');
+
+            //Join the user table, so we can get the entry creator's username
+            $select_query->join('users_field_data','u','es.uid = u.uid');
+            // Join the node table, so we can get the event's name
+            $select_query->join('node_field_data','n','es.nid = n.nid');
+
+            // select these specific fields for the output
+            $select_query->addField('u','name','username');
+            $select_query->addField('n','nid');
+            $select_query->addField('n','title');
+            $select_query->addField('es','name');
+            $select_query->addField('es','mail');
+
+            $entries = $select_query->execute()->fetchAll(\PDO::FETCH_ASSOC);
+
+            return $entries;
+        } catch(\Exception $e) {
+            \Drupal::messenger()->addStatus(
+                t('Unable to access the database. Please try again.')
+            );
+            return null;
+        }
+    }
+}
