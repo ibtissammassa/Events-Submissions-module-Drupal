@@ -17,7 +17,6 @@ dependencies:
   - 'drupal:text'
   - 'drupal:user'
   - 'drupal:views'
-  - 'events_submissions:events_submissions'
   - 'pathauto:pathauto'
   - 'twig_tweak:twig_tweak'
 module:

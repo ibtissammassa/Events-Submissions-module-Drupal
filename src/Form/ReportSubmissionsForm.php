@@ -25,7 +25,7 @@ class ReportSubmissionsForm extends FormBase {
         $form = [];
 
         $form['message'] = [
-            '#markup'=> t('Bellow is a list of all Events submissions inclusing username, full name, email address and the name of the event they will be attending.'),
+            '#markup'=> $this->t('Bellow is a list of all Events submissions inclusing username, full name, email address and the name of the event they will be attending.'),
         ];
 
         $headers = [
@@ -50,6 +50,9 @@ class ReportSubmissionsForm extends FormBase {
             '#type' => 'submit',
             '#value' => $this->t('Export CSV'),
             '#submit' => ['::exportCsv'], //custom submit handler
+            '#attributes' => [
+                'style' => 'background-color: blue; color: white;',
+            ],
         ];
 
         // Do not cache this page (always refresh this render array when it is time to display it)
@@ -91,7 +94,7 @@ class ReportSubmissionsForm extends FormBase {
         $response->headers->set('Content-Disposition', 'attachment; filename="events_submissions_report.csv"');
         $response->send();    
         \Drupal::messenger()->addMessage(
-            t('CSV exported successfully')
+            $this->t('CSV exported successfully')
         );
         return;
     }
@@ -124,7 +127,7 @@ class ReportSubmissionsForm extends FormBase {
             return $entries;
         } catch(\Exception $e) {
             \Drupal::messenger()->addStatus(
-                t('Unable to access the database. Please try again.')
+                $this->t('Unable to access the database. Please try again.')
             );
             return null;
         }
