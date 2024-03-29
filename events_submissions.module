@@ -34,12 +34,10 @@ function events_submissions_theme($existing, $type, $theme, $path) {
             '#weight'=>50,
         ];
 
-        $enabler = \Drupal::service('submissions.enabler');
         $form['events_submissions_list']['event_submissions_enabled'] = [
             '#type'=> 'checkbox',
             '#title'=> t('Collect Event submissions details for this event.'),
             '#required' => TRUE,
-            '#default_value'=> TRUE,
         ];
 
         foreach(array_keys($form['actions']) as $action) {
