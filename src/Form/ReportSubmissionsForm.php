@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 class ReportSubmissionsForm extends FormBase {
 
     public $flag = '';
-
     /**
      * {@inheritDoc}
      */
@@ -58,14 +57,13 @@ class ReportSubmissionsForm extends FormBase {
             $this->t('full name'),
             $this->t('Email'),
         ];
-
-        $table_rows = $this->loadSubmissions($this->flag);
-
+        // $table_rows = [];
+        // $table_rows = $this->loadSubmissions($this->flag);
         //Create the render array for rendering an html table.
         $form['table'] = [
             '#type'=> 'table',
             '#header'=> $headers,
-            '#rows'=> $table_rows,
+            '#rows'=> $this->loadSubmissions($this->flag),
             '#empty'=>$this->t('No entrie found for the specified event.')
         ];
 
@@ -73,9 +71,6 @@ class ReportSubmissionsForm extends FormBase {
         $form['pager'] = [
           '#type' => 'pager',
         ];
-        if (count($table_rows) < 10) {
-            $form['pager']['#access'] = false;
-        }
 
         $form['submit_2'] = [
             '#type' => 'submit',
@@ -84,6 +79,10 @@ class ReportSubmissionsForm extends FormBase {
             '#attributes' => [
                 'style' => 'background-color: blue; color: white;', // Apply inline styles
             ],
+        ];
+
+        $form['pager'] = [
+            '#type' => 'pager',
         ];
         // this is a test comment for pushing holaldjkf
         // Do not cache this page (always refresh this render array when it is time to display it)
@@ -157,7 +156,7 @@ class ReportSubmissionsForm extends FormBase {
             $select_query->addField('es','mail');
 
             // Add pager to the query
-            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender');
+            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender')->limit(5);
             $entries = $pager->execute()->fetchAll(\PDO::FETCH_ASSOC);
 
             return $entries;
