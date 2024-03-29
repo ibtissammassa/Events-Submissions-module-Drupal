@@ -1,6 +1,9 @@
 view event submit:
   title: 'View Event submission Form'
   description: 'View and submit to attend to the event'
+view related events:
+  title: 'view related events block'
+  description: 'view related events block'
 administor eventSubmissionsList:
   title: 'Administor Event submissions settings'
   description: 'Access the Event submissions settings page'

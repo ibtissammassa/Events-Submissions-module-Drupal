@@ -1,7 +1,15 @@
 submissions.report:
-  path: '/admin/reports/eventsSubmissions'
+  path: "/admin/reports/eventsSubmissions"
   defaults:
     _controller: '\Drupal\events_submissions\Controller\ReportController::report'
-    _title: 'List of events submissions'
+    _title: "List of events submissions"
   requirements:
-    _permission: 'access submissions report'
+    _permission: "access submissions report"
+
+submissions.autocomplete:
+  path: "/autocomplete"
+  defaults:
+    _controller: '\Drupal\events_submissions\Controller\AutocompleteController::handleAutocomplete'
+    _title: "AutoComplete Controller"
+  requirements:
+    _permission: "access submissions report"

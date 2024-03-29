@@ -1,5 +1,10 @@
 excluded:
-  - field.storage.node.field_speaker_topics
-  - core.entity_view_display.node.speakers.default
-  - core.entity_view_display.node.speakers.teaser
+  - block.block.events_theme_views_block__events_block_1
+  - core.entity_form_display.node.article.default
+  - core.entity_view_display.node.article.default
+  - core.entity_view_display.node.article.rss
+  - core.entity_view_display.node.article.teaser
+  - field.field.node.article.comment
+  - field.field.node.article.field_image
+  - field.storage.node.field_image
 required: true
