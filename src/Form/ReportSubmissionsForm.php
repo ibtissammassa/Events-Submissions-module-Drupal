@@ -55,7 +55,7 @@ class ReportSubmissionsForm extends FormBase {
             $this->t('full name'),
             $this->t('Email'),
         ];
-//hack maria
+
         $table_rows = $this->loadSubmissions($this->flag);
 
         //Create the render array for rendering an html table.
