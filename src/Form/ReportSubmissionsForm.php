@@ -31,17 +31,20 @@ class ReportSubmissionsForm extends FormBase {
             "#type" => "container",
             '#attributes' => [
                 'id' => ['notices'],
-                'class' => ['flex'],
+                'style' => 'display:flex; gap:10px;align-items:center;',
             ]
         ];
         $form["filter"]["event"] = [
             "#type" => "textfield",
-            "#title" => $this->t("Event"),
+            "#placeholder" => $this->t("Event"),
             "#autocomplete_route_name" => 'submissions.autocomplete',
         ];
         $form["filter"]["submit_1"] = [
             "#type"=> "submit",
             "#value" => $this->t("Filter"),
+            '#attributes' => [
+                'style' => 'height:fit-content',
+            ]
         ];
 
         $form['message'] = [
@@ -55,7 +58,7 @@ class ReportSubmissionsForm extends FormBase {
             $this->t('full name'),
             $this->t('Email'),
         ];
-//hack maria
+
         $table_rows = $this->loadSubmissions($this->flag);
 
         //Create the render array for rendering an html table.
@@ -75,6 +78,9 @@ class ReportSubmissionsForm extends FormBase {
             '#type' => 'submit',
             '#value' => $this->t('Export CSV'),
             '#submit' => ['::exportCsv'], //custom submit handler
+            '#attributes' => [
+                'style' => 'background-color: blue; color: white;', // Apply inline styles
+            ],
         ];
         // this is a test comment for pushing holaldjkf
         // Do not cache this page (always refresh this render array when it is time to display it)
