@@ -73,6 +73,9 @@ class ReportSubmissionsForm extends FormBase {
         $form['pager'] = [
           '#type' => 'pager',
         ];
+        if (count($table_rows) < 10) {
+            $form['pager']['#access'] = false;
+        }
 
         $form['submit_2'] = [
             '#type' => 'submit',
@@ -93,7 +96,6 @@ class ReportSubmissionsForm extends FormBase {
      */
     function submitForm(array &$form, FormStateInterface $form_state){
         $this->flag = $form_state->getValue('event');
-        dpm($form_state);
         $form_state->setRebuild(TRUE);
     }
 
@@ -155,7 +157,7 @@ class ReportSubmissionsForm extends FormBase {
             $select_query->addField('es','mail');
 
             // Add pager to the query
-            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender')->limit(5);
+            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender');
             $entries = $pager->execute()->fetchAll(\PDO::FETCH_ASSOC);
 
             return $entries;
