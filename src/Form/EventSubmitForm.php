@@ -21,7 +21,8 @@ class EventSubmitForm extends FormBase {
      * {@inheritDoc}
      */
     function buildForm(array $form, FormStateInterface $form_state){
-        //get the node of the page 
+        //test comment
+        //get the node of the page
         $node = \Drupal::routeMatch()->getParameter('node');
         //some pages may not be nodes, so the $node will be NULL
         if(!(is_null($node))) {
@@ -93,13 +94,13 @@ class EventSubmitForm extends FormBase {
             if ($node instanceof \Drupal\node\NodeInterface && $node->getType() == 'event') {
                 // Get the current value of the field.
                 $seats_left = $node->get('field_seats_left')->value;
-            
+
                 // Decrease the value by 1.
                 $new_seats_left = $seats_left - 1;
-            
+
                 // Set the new value to the field.
                 $node->set('field_seats_left', $new_seats_left);
-            
+
                 // Save the node.
                 $node->save();
             }
