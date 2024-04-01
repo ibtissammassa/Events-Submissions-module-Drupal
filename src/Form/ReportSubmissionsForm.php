@@ -71,6 +71,9 @@ class ReportSubmissionsForm extends FormBase {
         $form['pager'] = [
           '#type' => 'pager',
         ];
+        if (count($table_rows) < 10) {
+            $form['pager']['#access'] = false;
+        }
 
         $form['submit_2'] = [
             '#type' => 'submit',
@@ -102,7 +105,9 @@ class ReportSubmissionsForm extends FormBase {
      * Custom submit handler for exporting CSV.
      */
     public function exportCsv(array &$form, FormStateInterface $form_state) {
-        $table_rows = $form['table']['#rows'];
+        // $table_rows = $form['table']['#rows'];
+        // Fetch all submissions without pagination
+        $table_rows = $this->loadSubmissions($this->flag, false);
         $csv_content = '';
 
         $headers = [
@@ -136,7 +141,7 @@ class ReportSubmissionsForm extends FormBase {
      *
      * @return array|null
      */
-    protected function loadSubmissions($eventName='') {
+    protected function loadSubmissions($eventName='', $applyPager = true) {
         try{
             $database = \Drupal::database();
             $select_query = $database->select('events_submissions_list','es');
@@ -156,7 +161,7 @@ class ReportSubmissionsForm extends FormBase {
             $select_query->addField('es','mail');
 
             // Add pager to the query
-            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender')->limit(5);
+            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender');
             $entries = $pager->execute()->fetchAll(\PDO::FETCH_ASSOC);
 
             return $entries;
