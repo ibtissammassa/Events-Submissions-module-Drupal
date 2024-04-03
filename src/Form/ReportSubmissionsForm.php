@@ -41,6 +41,7 @@ class ReportSubmissionsForm extends FormBase {
         $form["filter"]["submit_1"] = [
             "#type"=> "submit",
             "#value" => $this->t("Filter"),
+            '#submit' => ['::filterRows'],
             '#attributes' => [
                 'style' => 'height:fit-content',
             ]
@@ -71,9 +72,6 @@ class ReportSubmissionsForm extends FormBase {
         $form['pager'] = [
           '#type' => 'pager',
         ];
-        // if (count($table_rows) < 10) {
-            //     $form['pager']['#access'] = false;
-        // }
 
         $form['submit_2'] = [
             '#type' => 'submit',
@@ -83,7 +81,6 @@ class ReportSubmissionsForm extends FormBase {
                 'style' => 'background-color: blue; color: white;', // Apply inline styles
             ],
         ];
-// this is a test comment for pushing holaldjkf
         // Do not cache this page (always refresh this render array when it is time to display it)
         $form['#cache']['max-age'] = 0;
         return $form;
@@ -93,6 +90,11 @@ class ReportSubmissionsForm extends FormBase {
      * {@inheritDoc}
      */
     function submitForm(array &$form, FormStateInterface $form_state){
+        // $this->flag = $form_state->getValue('event');
+        // $form_state->setRebuild(TRUE);
+    }
+
+    function filterRows(array &$form, FormStateInterface $form_state){
         $this->flag = $form_state->getValue('event');
         $form_state->setRebuild(TRUE);
     }
@@ -158,7 +160,7 @@ class ReportSubmissionsForm extends FormBase {
 
 
             if ($applyPager) {
-            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender');
+            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender')->limit(5);
             $entries = $pager->execute()->fetchAll(\PDO::FETCH_ASSOC);
 } else {
                 $entries = $select_query->execute()->fetchAll(\PDO::FETCH_ASSOC);
