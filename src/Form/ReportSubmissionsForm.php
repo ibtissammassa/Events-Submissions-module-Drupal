@@ -63,7 +63,7 @@ class ReportSubmissionsForm extends FormBase {
         $form['table'] = [
             '#type'=> 'table',
             '#header'=> $headers,
-            '#rows'=> $table_rows,
+                         '#rows'=> $table_rows,
             '#empty'=>$this->t('No entrie found for the specified event.')
         ];
 
@@ -71,7 +71,6 @@ class ReportSubmissionsForm extends FormBase {
         $form['pager'] = [
           '#type' => 'pager',
         ];
-
         // if (count($table_rows) < 10) {
             //     $form['pager']['#access'] = false;
         // }
@@ -84,7 +83,7 @@ class ReportSubmissionsForm extends FormBase {
                 'style' => 'background-color: blue; color: white;', // Apply inline styles
             ],
         ];
-
+// this is a test comment for pushing holaldjkf
         // Do not cache this page (always refresh this render array when it is time to display it)
         $form['#cache']['max-age'] = 0;
         return $form;
@@ -161,10 +160,9 @@ class ReportSubmissionsForm extends FormBase {
             if ($applyPager) {
             $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender');
             $entries = $pager->execute()->fetchAll(\PDO::FETCH_ASSOC);
-            } else {
+} else {
                 $entries = $select_query->execute()->fetchAll(\PDO::FETCH_ASSOC);
             }
-
 
             return $entries;
         }
