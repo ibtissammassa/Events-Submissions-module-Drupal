@@ -63,8 +63,7 @@ class ReportSubmissionsForm extends FormBase {
         $form['table'] = [
             '#type'=> 'table',
             '#header'=> $headers,
-            // '#rows'=> $this->loadSubmissions($this->flag),
-             '#rows'=> $table_rows,
+            '#rows'=> $table_rows,
             '#empty'=>$this->t('No entrie found for the specified event.')
         ];
 
@@ -72,9 +71,10 @@ class ReportSubmissionsForm extends FormBase {
         $form['pager'] = [
           '#type' => 'pager',
         ];
-        if (count($table_rows) < 3) {
-            $form['pager']['#access'] = false;
-        }
+
+        // if (count($table_rows) < 10) {
+            //     $form['pager']['#access'] = false;
+        // }
 
         $form['submit_2'] = [
             '#type' => 'submit',
@@ -85,10 +85,6 @@ class ReportSubmissionsForm extends FormBase {
             ],
         ];
 
-        // $form['pager'] = [
-        //     '#type' => 'pager',
-        // ];
-        // this is a test comment for pushing holaldjkf
         // Do not cache this page (always refresh this render array when it is time to display it)
         $form['#cache']['max-age'] = 0;
         return $form;
@@ -161,9 +157,14 @@ class ReportSubmissionsForm extends FormBase {
             $select_query->addField('es','name');
             $select_query->addField('es','mail');
 
-            // Add pager to the query
-            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender')->limit(5);
+
+            if ($applyPager) {
+            $pager = $select_query->extend('Drupal\Core\Database\Query\PagerSelectExtender');
             $entries = $pager->execute()->fetchAll(\PDO::FETCH_ASSOC);
+            } else {
+                $entries = $select_query->execute()->fetchAll(\PDO::FETCH_ASSOC);
+            }
+
 
             return $entries;
         }
